@@ -16,5 +16,14 @@ const review = async (req, res) => {
   }
 };
 
+const getReviews = async (req, res) => {
+  const { id } = req.params;
+  try {
+      const reviews = await Review.find({ book: id }).populate('user', 'username');
+      res.status(200).json(reviews);
+  } catch (error) {
+      res.status(400).json({ message: 'Error fetching reviews', error });
+  }
+};
 
-module.exports = {review}
+module.exports = {review,getReviews}
